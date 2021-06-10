@@ -24,13 +24,24 @@ def index():
     Home page
     '''
     todos = Todo.query.all()
-    return render_template('index.html', todos=todos)
+    all_todos = list(map(lambda x: x.serialize(), todos))
+    return render_template('index.html',  all_todos=all_todos)
 
 
 @app.route("/sort")
 def sort_todos():
     todos = Todo.query.order_by(Todo.name).all()
-    return render_template('index.html', todos=todos)
+    all_todos = list(map(lambda x: x.serialize(), todos))
+    return render_template('index.html',  all_todos=all_todos)
+
+
+@app.route("/edit/<id>")
+def edit_todos(id):
+    body = request.form
+    todo = Todo.query.filter_by(id=id).first()
+    todo.name = body['name']
+    db.session.commit()
+    return redirect(url_for('index'))
 
 
 @app.route("/todo", methods=['POST'])
@@ -46,7 +57,6 @@ def add_todo():
 def done(id):
     todo = Todo.query.filter_by(id=id).first()
     todo.completed = not(todo.completed)
-    print(todo.completed)
     db.session.commit()
     return redirect(url_for('index'))
 
