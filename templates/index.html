@@ -19,21 +19,25 @@
                     <div class="card-header">
                         <form action="/todo" method="POST" >
                         <div class="form-group">
-                            <input type="text" name="name" id="task-name" placeholder="Todo" class="form-control" autoFocus="true">
+                            <input type="text" name="name" id="task-name" placeholder="Todo" class="form-control " autoFocus="true">
+                            <input type="date" id="due-date" class="form-control mt-2" name="dueDate">
                         </div>
-                            <button type="submit" class="btn btn-primary btn-block">Add Task</button>
+                            <button type="submit" class="btn btn-primary add-todo mt-2">Add Task</button>
                         </form>
-                        <button class="btn btn-warning btn-block" id="edit">Edit Task</button>
+                        <button class="btn btn-warning mt-2" id="edit">Edit Task</button>
+
                     </div>
                     <div class="card-body">
                     <ul class="list-group">
                         {% for todo in all_todos %}
                            <li class="list-group-item todo" >
                             <span class=" {% if todo.completed %} done {% endif %}">{{todo.name}}</span/>
-                                <a href="/done/{{todo.id}}" class="btn btn-success btn-sm">Done</a>
-                                <a href="/delete/{{todo.id}}" class="btn btn-danger btn-sm">Delete</a>
+                            <div class="float-end">
+                                <a href="/done/{{todo.id}}" class="btn btn-success btn-sm ">Done</a>
+                                <a href="/delete/{{todo.id}}" class="btn btn-danger btn-sm ">Delete</a>
+                            </div>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" 
+                                    <button class="btn btn-secondary dropdown-toggle btn-sm " 
                                     type="button" id="dropdownMenuButton1" 
                                     data-bs-toggle="dropdown" 
                                     aria-expanded="false">

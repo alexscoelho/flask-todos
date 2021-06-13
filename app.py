@@ -38,7 +38,7 @@ def sort_todos():
 @app.route("/edit/<id>", methods=['PUT'])
 def edit_todos(id):
     body = request.form
-    print(body)
+    print("/////////", body)
     todo = Todo.query.filter_by(id=id).first()
     todo.name = body['name']
     db.session.commit()
@@ -48,6 +48,7 @@ def edit_todos(id):
 @app.route("/todo", methods=['POST'])
 def add_todo():
     body = request.form
+    print("/////////", body)
     todo = Todo(name=body['name'])
     db.session.add(todo)
     db.session.commit()
