@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -22,6 +23,8 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     completed = db.Column(db.Boolean, default=False)
+    due_date = db.Column(db.DateTime, nullable=False,
+                         default=datetime.utcnow)
 
     def serialize(self):
         return {

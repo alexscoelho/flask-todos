@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request
 from models import db, User, Todo
 from flask_migrate import Migrate
+from datetime import datetime
 
 # Flask
 app = Flask(__name__)
@@ -49,7 +50,9 @@ def edit_todos(id):
 def add_todo():
     body = request.form
     print("/////////", body)
-    todo = Todo(name=body['name'])
+    due_date = datetime.fromisoformat(body['due_date'])
+    print(type(due_date))
+    todo = Todo(name=body['name'], due_date=due_date)
     db.session.add(todo)
     db.session.commit()
     return redirect(url_for('index'))
