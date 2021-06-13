@@ -22,18 +22,16 @@
                             <input type="text" name="name" id="task-name" placeholder="Todo" class="form-control" autoFocus="true">
                         </div>
                             <button type="submit" class="btn btn-primary btn-block">Add Task</button>
-                            <a class="btn btn-warning btn-block" id="edit">Edit Task</a>
                         </form>
+                        <button class="btn btn-warning btn-block" id="edit">Edit Task</button>
                     </div>
                     <div class="card-body">
                     <ul class="list-group">
-
                         {% for todo in all_todos %}
                            <li class="list-group-item todo" >
                             <span class=" {% if todo.completed %} done {% endif %}">{{todo.name}}</span/>
                                 <a href="/done/{{todo.id}}" class="btn btn-success btn-sm">Done</a>
                                 <a href="/delete/{{todo.id}}" class="btn btn-danger btn-sm">Delete</a>
-                                
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" 
                                     type="button" id="dropdownMenuButton1" 

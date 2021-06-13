@@ -35,9 +35,10 @@ def sort_todos():
     return render_template('index.html',  all_todos=all_todos)
 
 
-@app.route("/edit/<id>")
+@app.route("/edit/<id>", methods=['PUT'])
 def edit_todos(id):
     body = request.form
+    print(body)
     todo = Todo.query.filter_by(id=id).first()
     todo.name = body['name']
     db.session.commit()
