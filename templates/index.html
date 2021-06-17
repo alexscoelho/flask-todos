@@ -11,8 +11,14 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}"></link>
   </head>
   <body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Todo App</a>
+            <a href="/logout" class="btn btn-danger btn-sm ">Logout</a>
+        </div>
+    </nav>
     <main class="container p-4">
-        <h1 class="display-4 text-center mt-4"> Todo App</h1>
+        
         <div class="row">
             <div class="col-md-4 offset-md-4 my-auto">
                 <div class="card">
@@ -36,6 +42,7 @@
                                 <a href="/done/{{todo.id}}" class="btn btn-success btn-sm ">Done</a>
                                 <a href="/delete/{{todo.id}}" class="btn btn-danger btn-sm ">Delete</a>
                             </div>
+                                <p class="due-date">Due Date: {{todo.due_date.strftime("%b %d")}}</p>
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle btn-sm " 
                                     type="button" id="dropdownMenuButton1" 

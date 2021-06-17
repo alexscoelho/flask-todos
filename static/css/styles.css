@@ -21,3 +21,24 @@ body {
 #edit {
   display: none;
 }
+
+.due-date {
+  color: grey;
+  font-size: 12px;
+}
+
+/* login */
+.signup-title {
+  text-align: center;
+}
+
+.sign-up-button {
+  text-align: center;
+}
+
+.sign-up-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

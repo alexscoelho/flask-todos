@@ -31,4 +31,5 @@ class Todo(db.Model):
             "id": self.id,
             "name": self.name,
             "completed": self.completed,
+            "due_date": self.due_date,
         }

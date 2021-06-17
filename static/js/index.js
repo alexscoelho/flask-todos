@@ -19,6 +19,7 @@ $(document).ready(function () {
     console.log(dueDate);
   });
   $("#edit").click(function (event) {
+    console.log(newTodo, dueDate);
     $.ajax({
       type: "PUT",
       dataType: "json",
