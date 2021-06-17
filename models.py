@@ -16,6 +16,7 @@ class User(db.Model):
     last_name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    todos = db.relationship('Todo', lazy=True)
 
 
 class Todo(db.Model):
@@ -25,6 +26,7 @@ class Todo(db.Model):
     completed = db.Column(db.Boolean, default=False)
     due_date = db.Column(db.DateTime, nullable=False,
                          default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey("User.id"))
 
     def serialize(self):
         return {

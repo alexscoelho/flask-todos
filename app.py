@@ -20,6 +20,7 @@ app.config['DEBUG'] = True
 app.config["JWT_TOKEN_LOCATION"] = [
     "headers", "cookies", "json", "query_string"]
 app.config["JWT_COOKIE_SECURE"] = False
+app.config["JWT_COOKIE_CSRF_PROTECT"] = False
 app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET_KEY')
 jwt = JWTManager(app)
 
@@ -86,7 +87,11 @@ def index():
     '''
     Home page
     '''
-    todos = Todo.query.all()
+    current_user_email = get_jwt_identity()
+    current_user_email_obj = User.query.filter_by(
+        email=current_user_email).first()
+    current_user_id = current_user_email_obj.id
+    todos = Todo.query.filter_by(user_id=current_user_id)
     all_todos = list(map(lambda x: x.serialize(), todos))
     return render_template('index.html',  all_todos=all_todos)
 
@@ -110,11 +115,18 @@ def edit_todos(id):
 
 
 @app.route("/todo", methods=['POST'])
+@jwt_required()
 def add_todo():
+    current_user_email = get_jwt_identity()
+    current_user_email_obj = User.query.filter_by(
+        email=current_user_email).first()
+    current_user_id = current_user_email_obj.id
+
     body = request.form
     try:
         due_date = datetime.fromisoformat(body['due_date'])
-        todo = Todo(name=body['name'], due_date=due_date)
+        todo = Todo(name=body['name'], due_date=due_date,
+                    user_id=current_user_id)
         db.session.add(todo)
         db.session.commit()
         return redirect(url_for('index'))
