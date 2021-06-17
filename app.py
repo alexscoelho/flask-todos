@@ -39,20 +39,23 @@ def login():
     '''
     Login
     '''
+    errMessage = None
     body = request.form
     if request.method == 'POST':
         email = body['email']
         password = body['password']
         query_user = User.query.filter_by(email=email).first()
-        if password != query_user.password or email != query_user.email:
-            return "Bad username or password"
+        if query_user is None:
+            errMessage = "Bad username or password"
+        elif password != query_user.password or email != query_user.email:
+            errMessage = "Bad username or password"
         else:
             access_token = create_access_token(identity=email)
             response = redirect(url_for('index'))
             set_access_cookies(response, access_token)
             return response
 
-    return render_template('login.html')
+    return render_template('login.html', errMessage=errMessage)
 
 
 @app.route("/signup", methods=['POST', 'GET'])
