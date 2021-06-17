@@ -88,6 +88,7 @@ def index():
     Home page
     '''
     current_user_email = get_jwt_identity()
+
     current_user_email_obj = User.query.filter_by(
         email=current_user_email).first()
     current_user_id = current_user_email_obj.id
@@ -97,8 +98,16 @@ def index():
 
 
 @app.route("/sort")
+@jwt_required()
 def sort_todos():
-    todos = Todo.query.order_by(Todo.name).all()
+    current_user_email = get_jwt_identity()
+
+    current_user_email_obj = User.query.filter_by(
+        email=current_user_email).first()
+    current_user_id = current_user_email_obj.id
+    todos = Todo.query.filter_by(
+        user_id=current_user_id).order_by(Todo.name).all()
+
     all_todos = list(map(lambda x: x.serialize(), todos))
     return render_template('index.html',  all_todos=all_todos)
 
