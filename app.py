@@ -118,6 +118,7 @@ def sort_todos():
 @app.route("/edit/<id>", methods=['PUT'])
 def edit_todos(id):
     body = request.form
+    print(body)
     due_date = datetime.fromisoformat(body['due_date'])
     todo = Todo.query.filter_by(id=id).first()
     todo.name = body['name']

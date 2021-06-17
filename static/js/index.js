@@ -1,7 +1,7 @@
 $(document).ready(function () {
   let todoName;
   let id;
-  let newTodo;
+  // let newTodo;
   $(".edit").click(function (event) {
     $("#edit").css("display", "block");
     $(".add-todo").css("display", "none");
@@ -11,20 +11,20 @@ $(document).ready(function () {
     $("#edit").data("id", id);
   });
   $("#task-name").change(function () {
-    newTodo = this.value;
-    console.log(newTodo);
+    todoName = this.value;
+    console.log(todoName);
   });
   $("#due-date").change(function () {
     dueDate = this.value;
     console.log(dueDate);
   });
   $("#edit").click(function (event) {
-    console.log(newTodo, dueDate);
+    console.log(todoName, dueDate);
     $.ajax({
       type: "PUT",
       dataType: "json",
       url: `/edit/${id}`,
-      data: { name: newTodo, due_date: dueDate },
+      data: { name: todoName, due_date: dueDate },
     });
     window.location.reload();
   });
